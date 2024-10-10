@@ -1,31 +1,38 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>Xamarin.iOS10;MonoAndroid81;</TargetFrameworks>
+        <TargetFrameworks>net8.0-ios;net8.0-android</TargetFrameworks>
     <AssemblyName>Serilog.Enrichers.Xamarin</AssemblyName>
-    <PackageId>Serilog.Enrichers.Xamarin</PackageId>
+    <PackageId>Serilog.Enrichers.Xamarin.NET</PackageId>
     <RootNamespace>Serilog</RootNamespace>
     <Description>Serilog Enrichers for Xamarin Apps</Description>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Version>99.9.9</Version>
   </PropertyGroup>
 
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('Xamarin.iOS')) ">
+  <ItemGroup Condition=" $(TargetFramework.EndsWith('-ios')) ">
     <Compile Include="platforms\apple\**\*.cs" />
     <Compile Include="platforms\shared\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+  <ItemGroup Condition=" $(TargetFramework.EndsWith('-android')) ">
     <Compile Include="platforms\android\**\*.cs" />
     <Compile Include="platforms\shared\**\*.cs" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" $(TargetFramework.StartsWith('MonoAndroid')) ">
+  <PropertyGroup Condition=" $(TargetFramework.EndsWith('-android')) ">
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog" Version="4.0.2" />
   </ItemGroup>
 
 </Project>
